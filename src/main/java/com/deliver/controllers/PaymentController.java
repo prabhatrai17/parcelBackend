@@ -14,6 +14,7 @@ import com.deliver.entities.MasterPaymentDetail;
 import com.deliver.entities.Payment;
 import com.deliver.entities.TempPaymentDetail;
 import com.deliver.Service.MasterPaymentDetailService;
+import com.deliver.Service.OrderService;
 import com.deliver.Service.PaymentService;
 
 @CrossOrigin
@@ -24,6 +25,9 @@ public class PaymentController {
   
   @Autowired
   private MasterPaymentDetailService masterPaymentDetailService;
+  
+  @Autowired
+  private OrderService orderService;
 
 	@PostMapping("/savepayment")
 	public Payment savePayment (@RequestBody Payment payment) {
@@ -40,16 +44,20 @@ public class PaymentController {
 		return service.getPayments();
 	}
 	
-	@PostMapping("/payment_validate/{orderAmount}")
-	public boolean validatePayment(@RequestBody TempPaymentDetail tempPaymentDetail,@PathVariable int orderAmount) {
+	@PostMapping("/payment_validate/{orderAmount}/{orderId}")
+	public boolean validatePayment(@RequestBody TempPaymentDetail tempPaymentDetail,@PathVariable double orderAmount, @PathVariable int orderId) {
 		System.out.println(tempPaymentDetail);
+		System.out.println(orderId);
 		MasterPaymentDetail temp=masterPaymentDetailService.checkCardDetail(tempPaymentDetail,orderAmount);
 		System.out.println(temp);
 		
 		if(temp==null)
 			return false;
 		else
+		{
+			orderService.updatePayment(orderId);
 			return true;
+		}
 	}
 	
 }

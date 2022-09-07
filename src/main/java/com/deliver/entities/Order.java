@@ -45,6 +45,14 @@ public class Order {
     @JsonManagedReference
 	private List<Item> item;
 	@Column
+	private String pickupAddress;
+	@Column
+    private String dropAddress;
+	@Column
+    private int estDistance;
+	@Column
+    private double estCost;
+	@Column
 	private String pickupStatus;
 	@Column
 	private String dispatchStatus;
@@ -52,8 +60,50 @@ public class Order {
 	private String arrivingStatus;
 	@Column
 	private String deliveryStatus;
+	@Column
+	private String driverUserId;
+	@Column
+	private String paymentStatus;
 	
 	
+	
+	
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+	public String getPickupAddress() {
+		return pickupAddress;
+	}
+	public void setPickupAddress(String pickupAddress) {
+		this.pickupAddress = pickupAddress;
+	}
+	public String getDropAddress() {
+		return dropAddress;
+	}
+	public void setDropAddress(String dropAddress) {
+		this.dropAddress = dropAddress;
+	}
+	public float getEstDistance() {
+		return estDistance;
+	}
+	public void setEstDistance(int estDistance) {
+		this.estDistance = estDistance;
+	}
+	public double getEstCost() {
+		return estCost;
+	}
+	public void setEstCost(double estCost) {
+		this.estCost = estCost;
+	}
+	public String getDriverUserId() {
+		return driverUserId;
+	}
+	public void setDriverUserId(String driverUserId) {
+		this.driverUserId = driverUserId;
+	}
 	public String getPickupStatus() {
 		return pickupStatus;
 	}
@@ -127,35 +177,40 @@ public class Order {
 		super();
 		
 	}
-//	public Order(int orderId, String orderDate, String orderCompleted, User user, List<Item> item) {
-//	super();
-//	this.orderId = orderId;
-//	this.orderDate = orderDate;
-//	this.orderCompleted = orderCompleted;
-//	this.user = user;
-//	this.item = item;
-//}
+	public Order(int orderId, String orderDate, String orderCompleted, User user, List<Item> item, String pickupAddress,
+			String dropAddress, int estDistance, double estCost, String pickupStatus, String dispatchStatus,
+			String arrivingStatus, String deliveryStatus, String driverUserId) {
+		super();
+		this.orderId = orderId;
+		this.orderDate = orderDate;
+		this.orderCompleted = orderCompleted;
+		this.user = user;
+		this.item = item;
+		this.pickupAddress = pickupAddress;
+		this.dropAddress = dropAddress;
+		this.estDistance = estDistance;
+		this.estCost = estCost;
+		this.pickupStatus = pickupStatus;
+		this.dispatchStatus = dispatchStatus;
+		this.arrivingStatus = arrivingStatus;
+		this.deliveryStatus = deliveryStatus;
+		this.driverUserId = driverUserId;
+	}
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", orderDate=" + orderDate + ", orderCompleted=" + orderCompleted
+				+ ", user=" + user + ", item=" + item + ", pickupAddress=" + pickupAddress + ", dropAddress="
+				+ dropAddress + ", estDistance=" + estDistance + ", estCost=" + estCost + ", pickupStatus="
+				+ pickupStatus + ", dispatchStatus=" + dispatchStatus + ", arrivingStatus=" + arrivingStatus
+				+ ", deliveryStatus=" + deliveryStatus + ", driverUserId=" + driverUserId + ", paymentStatus="
+				+ paymentStatus + "]";
+	}
+
 	
+
 	
-public Order(int orderId, String orderDate, String orderCompleted, User user, List<Item> item, String pickupStatus,
-		String dispatchStatus, String arrivingStatus, String deliveryStatus) {
-	super();
-	this.orderId = orderId;
-	this.orderDate = orderDate;
-	this.orderCompleted = orderCompleted;
-	this.user = user;
-	this.item = item;
-	this.pickupStatus = pickupStatus;
-	this.dispatchStatus = dispatchStatus;
-	this.arrivingStatus = arrivingStatus;
-	this.deliveryStatus = deliveryStatus;
-}
-//@Override
-//public String toString() {
-//	return "Order [orderId=" + orderId + ", orderDate=" + orderDate + ", orderCompleted=" + orderCompleted + ", user="
-//			+ user + ", item=" + item + ", pickupStatus=" + pickupStatus + ", dispatchStatus=" + dispatchStatus
-//			+ ", arrivingStatus=" + arrivingStatus + ", deliveryStatus=" + deliveryStatus + "]";
-//}
+
+
 
 
 	

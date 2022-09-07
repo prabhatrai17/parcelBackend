@@ -13,7 +13,7 @@ public class MasterPaymentDetailService {
 	@Autowired
 	MasterPaymentDetailRepo masterPaymentDetailRepo;
 	
-   public MasterPaymentDetail checkCardDetail(TempPaymentDetail detail,int orderAmount) {
+   public MasterPaymentDetail checkCardDetail(TempPaymentDetail detail,double orderAmount) {
 	   String cardNo=detail.getCardNo();
 	   String expiry=detail.getExpiry();
 	   int cvv=detail.getCvv();

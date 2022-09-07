@@ -1,6 +1,8 @@
 package com.deliver.controllers;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,13 +61,33 @@ Item createOrder(@RequestBody FullOrderObj fOrder) {
 @PostMapping("/status-update/{orderId}")	
 boolean createOrder(@RequestBody FullOrderObj fOrder, @PathVariable int orderId) {
 //	orderId=6;
-//	fOrder.setUser(null);
-//	fOrder.setItem(null);
+	fOrder.setUser(null);
+	fOrder.setItem(null);
 	System.out.println(fOrder);
    if( orderService.statusUpdate(fOrder, orderId)=="pass")
 	   return true;
    else return false;
 }
+//get revenue of driver from order table using driverId
+		@GetMapping("/driver-revenue/{driverId}")
+		public double getRevenueGenByDriver(@PathVariable int driverId) {
+			return orderService.getRevenueGenByDriver(driverId);
+		}
+//get revenue of driver from order by number of days table using driverId
+	 @GetMapping("/driver-revenue-days/{driverId}/{days}")
+	 public double getRevenueGenByDriverFilterDays(@PathVariable int driverId,@PathVariable int days) {
+		 LocalDateTime dtObj1=  LocalDateTime.now();
+		 LocalDateTime dtObj2=  LocalDateTime.now();
+		 dtObj2=dtObj1.minusDays(days);
+		 
+		 String dtObj1Str=dtObj1.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+		 String dtObj2Str=dtObj2.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+		 System.out.println(dtObj1Str);
+		 System.out.println(dtObj2Str);
+		 
+	 	return orderService.getRevenueGenByDriverFilterDays(driverId,dtObj1Str,dtObj2Str);
+				}
+	 
 @GetMapping("/order/{orderId}")
 Optional<Order> getOneOrder(@PathVariable int orderId) {
 	return orderService.getOrder(orderId);

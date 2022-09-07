@@ -29,7 +29,7 @@ public class Vehicle {
     @Column
     private int orderId;
     @Column
-    private int userId;
+    private int driverUserId;
     @Column
     private int userDlNumber;
 
@@ -41,11 +41,12 @@ public class Vehicle {
 public void setOrderId(int orderId) {
 	this.orderId = orderId;
 }
-public int getUserId() {
-	return userId;
+
+public int getDriverUserId() {
+	return driverUserId;
 }
-public void setUserId(int userId) {
-	this.userId = userId;
+public void setDriverUserId(int driverUserId) {
+	this.driverUserId = driverUserId;
 }
 public int getUserDlNumber() {
 	return userDlNumber;
@@ -103,7 +104,7 @@ public void setUserDlNumber(int userDlNumber) {
 		// TODO Auto-generated constructor stub
 	}
 	public Vehicle(int id, String model, String vehicleNumber, String vehicleType, int revenueGenerated,
-			boolean vehicleAvailability, String imgURL, int orderId, int userId, int userDlNumber) {
+			boolean vehicleAvailability, String imgURL, int orderId, int driverUserId, int userDlNumber) {
 		super();
 		this.id = id;
 		this.model = model;
@@ -113,14 +114,14 @@ public void setUserDlNumber(int userDlNumber) {
 		this.vehicleAvailability = vehicleAvailability;
 		this.imgURL = imgURL;
 		this.orderId = orderId;
-		this.userId = userId;
+		this.driverUserId = driverUserId;
 		this.userDlNumber = userDlNumber;
 	}
 	@Override
 	public String toString() {
 		return "Vehicle [id=" + id + ", model=" + model + ", vehicleNumber=" + vehicleNumber + ", vehicleType="
 				+ vehicleType + ", revenueGenerated=" + revenueGenerated + ", vehicleAvailability="
-				+ vehicleAvailability + ", imgURL=" + imgURL + ", orderId=" + orderId + ", userId=" + userId
+				+ vehicleAvailability + ", imgURL=" + imgURL + ", orderId=" + orderId + ", driverUserId=" + driverUserId
 				+ ", userDlNumber=" + userDlNumber + "]";
 	}
   

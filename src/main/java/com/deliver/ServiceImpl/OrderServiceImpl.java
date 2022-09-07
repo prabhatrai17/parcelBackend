@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order = new Order();
 		order.setOrderCompleted("false");
 		LocalDateTime dateTimeObj = LocalDateTime.now();
-		order.setOrderDate((dateTimeObj.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))).toString());
+		order.setOrderDate((dateTimeObj.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))).toString());
 		System.out.println("order after date set: " + order);
 		System.out.println("mail: " + mail);
 		// user id fetched
@@ -50,23 +50,34 @@ public class OrderServiceImpl implements OrderService {
 		// user added to order
 		order.setUser(user);
 		System.out.println("order after id set: " + order);
+		order.setPickupAddress(fOrder.getPickupAddress());
+		order.setDropAddress(fOrder.getDropAddress());
+		order.setEstDistance(fOrder.getEstDistance());
+		order.setEstCost(fOrder.getEstCost());
 		order.setArrivingStatus(fOrder.getArrivingStatus());
 		order.setDeliveryStatus(fOrder.getDeliveryStatus());
 		order.setDispatchStatus(fOrder.getDispatchStatus());
 		order.setPickupStatus(fOrder.getPickupStatus());
+		order.setPaymentStatus(fOrder.getPaymentStatus());
 		
 		return orderRepository.save(order);
 
 	}
 
 	public String statusUpdate(FullOrderObj ob, int orderId) {
-		//vehicleService.changeVehicle(orderId);
+		
+		double prevRevenue=vehicleService.getVehicleRevenueByOrderId(orderId);
+		double cost=ob.getEstCost();
+		double revenue=cost*15/100+prevRevenue;
+		vehicleService.changeVehicle(revenue,orderId);
 		
 		System.out.println(ob);
 		String arrivingStatus = ob.getArrivingStatus();
 		String pickupStatus = ob.getPickupStatus();
 		String dispatchStatus = ob.getDispatchStatus();
 		String deliveryStatus = ob.getDeliveryStatus();
+		
+		
 		System.out.println(
 				arrivingStatus + " " + deliveryStatus + " " + dispatchStatus + " " + pickupStatus + " " + orderId);
 
@@ -80,7 +91,58 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 	}
-
+	
+	public String setDriverUserId(int driverUserId,int orderId){
+		Integer res=orderRepository.setDriverUserId(driverUserId,orderId);
+		System.out.println("result after driverUserID seted " + res);
+		if (res == null)
+			return "fail";
+		else {
+			return "pass";
+		}
+	}
+	//update payment to true 
+	public String updatePayment(int orderId){
+		String s="true";
+		Integer res=orderRepository.updatePaymentStatus(orderId,s);
+		System.out.println("result after payment set true " + res);
+		if (res == null)
+			return "fail";
+		else {
+			return "pass";
+		}
+	}
+	//gets total rev gen by driver
+   public double getRevenueGenByDriver(int driverId) {
+	   List<Order> orders= orderRepository.getOrdersByDriver(driverId);
+	   double totalRevenue=0;
+	   double totalAmount=0;
+	   for( Order order:orders) {
+		   totalAmount=totalAmount+order.getEstCost();
+	   }
+	   totalRevenue=totalAmount*15/100;
+	   return totalRevenue;
+	   
+	   
+   }
+   //gets revenue gen acc.to no. of days
+   public double getRevenueGenByDriverFilterDays(int driverId,String date1,String date2) {
+	   System.out.println("date1 "+date1);
+	   System.out.println("date2 "+date2);
+	   List<Order> orders= orderRepository.getRevenueGenByDriverFilterDays(date1,date2,driverId);
+	   
+//System.out.println(orderRepository.getRevenueGenByDriverFilterDays(driverId,date1,date2));
+	   System.out.println(orders);
+	   double totalRevenue=0;
+	   double totalAmount=0;
+	   for( Order order:orders) {
+		   totalAmount=totalAmount+order.getEstCost();
+	   }
+	   totalRevenue=totalAmount*15/100;
+	   return totalRevenue;
+	   
+	   
+   }
 	@Override
 	public Optional<Order> getOrder(int id) {
 		Integer orderId = id;

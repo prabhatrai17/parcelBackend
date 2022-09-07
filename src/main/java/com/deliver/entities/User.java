@@ -99,10 +99,10 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-//	@Override
-//	public String toString() {
-//		return "user [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-//				+ ", mobileNo=" + mobileNo + ", password=" + password + ", role=" + role + "]";
-//	}
+	@Override
+	public String toString() {
+		return "user [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", mobileNo=" + mobileNo + ", password=" + password + ", role=" + role + "]";
+	}
 
 }

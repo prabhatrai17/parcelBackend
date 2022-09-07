@@ -14,6 +14,12 @@ public class FullOrderObj {
 	private Item item;
 	private User user;
 	
+	private String pickupAddress;
+    private String dropAddress;
+    private int estDistance;
+    private double estCost;
+    private String paymentStatus;
+	
 	private String pickupStatus;
 	
 	private String dispatchStatus;
@@ -23,6 +29,38 @@ public class FullOrderObj {
 	private String deliveryStatus;
 	
 	
+	
+	
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+	public String getPickupAddress() {
+		return pickupAddress;
+	}
+	public void setPickupAddress(String pickupAddress) {
+		this.pickupAddress = pickupAddress;
+	}
+	public String getDropAddress() {
+		return dropAddress;
+	}
+	public void setDropAddress(String dropAddress) {
+		this.dropAddress = dropAddress;
+	}
+	public int getEstDistance() {
+		return estDistance;
+	}
+	public void setEstDistance(int estDistance) {
+		this.estDistance = estDistance;
+	}
+	public double getEstCost() {
+		return estCost;
+	}
+	public void setEstCost(double estCost) {
+		this.estCost = estCost;
+	}
 	public String getPickupStatus() {
 		return pickupStatus;
 	}
@@ -72,13 +110,19 @@ public class FullOrderObj {
 		this.user = user;
 	}
 
-	public FullOrderObj(String orderDate, String orderCompleted, Item item, User user, String pickupStatus,
-			String dispatchStatus, String arrivingStatus, String deliveryStatus) {
+	
+	public FullOrderObj(String orderDate, String orderCompleted, Item item, User user, String pickupAddress,
+			String dropAddress, int estDistance, double estCost, String pickupStatus, String dispatchStatus,
+			String arrivingStatus, String deliveryStatus) {
 		super();
 		this.orderDate = orderDate;
 		this.orderCompleted = orderCompleted;
 		this.item = item;
 		this.user = user;
+		this.pickupAddress = pickupAddress;
+		this.dropAddress = dropAddress;
+		this.estDistance = estDistance;
+		this.estCost = estCost;
 		this.pickupStatus = pickupStatus;
 		this.dispatchStatus = dispatchStatus;
 		this.arrivingStatus = arrivingStatus;
@@ -91,9 +135,13 @@ public class FullOrderObj {
 	@Override
 	public String toString() {
 		return "FullOrderObj [orderDate=" + orderDate + ", orderCompleted=" + orderCompleted + ", item=" + item
-				+ ", user=" + user + ", pickupStatus=" + pickupStatus + ", dispatchStatus=" + dispatchStatus
-				+ ", arrivingStatus=" + arrivingStatus + ", deliveryStatus=" + deliveryStatus + "]";
+				+ ", user=" + user + ", pickupAddress=" + pickupAddress + ", dropAddress=" + dropAddress
+				+ ", estDistance=" + estDistance + ", estCost=" + estCost + ", paymentStatus=" + paymentStatus
+				+ ", pickupStatus=" + pickupStatus + ", dispatchStatus=" + dispatchStatus + ", arrivingStatus="
+				+ arrivingStatus + ", deliveryStatus=" + deliveryStatus + "]";
 	}
+
+	
 	
 	
 	

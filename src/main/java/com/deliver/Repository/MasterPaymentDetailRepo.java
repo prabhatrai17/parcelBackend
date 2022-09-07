@@ -11,6 +11,6 @@ import com.deliver.entities.Payment;
 @Repository
 public interface MasterPaymentDetailRepo extends JpaRepository <MasterPaymentDetail, Integer>{
 	@Query(value="select * from parsola.master_payment_detail where card_no=?1 and card_expiry_date=?2 and cvv_no=?3 and card_pin=?4 and available_balance>=?5",nativeQuery=true)
-	MasterPaymentDetail confirmDetail(String cardNo,String expiry,int cvv,int pin,int orderAmount);
+	MasterPaymentDetail confirmDetail(String cardNo,String expiry,int cvv,int pin,double orderAmount);
 
 }

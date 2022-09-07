@@ -23,8 +23,16 @@ public class VehicleService {
 	public Vehicle addVehicle(Vehicle vehicle) {
 		return repository.save(vehicle);
 	}
-	public Vehicle changeVehicle(int orderId) {
-		return repository.changeVehicle(orderId);
+	public double getVehicleRev(int driverId) {
+		return repository.getVehicleRev(driverId);
+	}
+	
+	public double getVehicleRevenueByOrderId(int orderId) {
+		return repository.getVehicleRevenueByOrderId(orderId);
+	}
+	public Integer changeVehicle(double revenue,int orderId) {
+		System.out.println("revenue before pass to repo: "+revenue+"orderId "+orderId);
+		return repository.changeVehicle(revenue,orderId);
 	}
 
 	public Vehicle getVehicleById(int id) {
@@ -34,10 +42,10 @@ public class VehicleService {
 		Integer userId=userRepository.findUserIdByEmail(userEmail);
 		if(userId==null) return null;
 		else
-		return repository.findByUserId(userId);
+		return repository.findByDriverUserId(userId);
 	}
-	public Vehicle getVehicleByUserId(int userId) {
-		return repository.findByUserId(userId);
+	public Vehicle getVehicleByDriverUserId(int DriverUserId) {
+		return repository.findByDriverUserId(DriverUserId);
 	}
 	public Vehicle getVehicleByOrderId(int userId, int orderId) {
 		return repository.findByOrderId(userId,orderId);
@@ -64,8 +72,8 @@ public class VehicleService {
 		existingVehicle.setVehicleAvailability(vehicle.isVehicleAvailability());
 		existingVehicle.setRevenueGenerated(vehicle.getRevenueGenerated());
 		existingVehicle.setImgURL(vehicle.getImgURL());
-		
-		existingVehicle.setUserId(vehicle.getUserId());
+		existingVehicle.setUserDlNumber(vehicle.getUserDlNumber());
+		existingVehicle.setDriverUserId(vehicle.getDriverUserId());
 		existingVehicle.setOrderId(vehicle.getOrderId());
 
 		return repository.save(existingVehicle);

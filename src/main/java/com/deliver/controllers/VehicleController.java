@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.deliver.entities.Order;
 import com.deliver.entities.Vehicle;
+import com.deliver.Service.OrderService;
 import com.deliver.Service.VehicleService;
 
 @RestController
@@ -24,6 +25,8 @@ public class VehicleController {
 
 	@Autowired
 	private VehicleService service;
+	@Autowired
+	private OrderService orderService;
 
 	
 	@PostMapping("/add_vehicle")
@@ -31,7 +34,7 @@ public class VehicleController {
 		System.out.println(vehicle);
 		return service.addVehicle(vehicle);
 	}
-//get by vehicle id
+//get by vehicle_id
 	@GetMapping("/vehicle/{id}")
 	public Vehicle findVehicleById(@PathVariable int id) {
 		return service.getVehicleById(id);
@@ -41,13 +44,13 @@ public class VehicleController {
 	public Vehicle findVehicleByuserEmail(@PathVariable String userEmail) {
 		return service.getVehicleByUserEmail(userEmail);
 	}
-	//get vehicle by userid
-		@GetMapping("/vehicle-driver/{userId}")
-		public Vehicle getVehicleByUserId(@PathVariable int userId) {
-			return service.getVehicleByUserId(userId);
+	//get vehicle by driverUserid
+		@GetMapping("/vehicle-driver/{driverUserId}")
+		public Vehicle getVehicleByUserId(@PathVariable int driverUserId) {
+			return service.getVehicleByDriverUserId(driverUserId);
 		}
 	
-	//method to get vehicle assigned
+	//method to get vehicle assigned for showing vehicle at customer side
 	@GetMapping("/vehicle/{userId}/{orderId}")
 	public Vehicle findVehicleByOrderId(@PathVariable int userId,@PathVariable int orderId) {
 		return service.getVehicleByOrderId(userId,orderId);
@@ -63,17 +66,27 @@ public class VehicleController {
 	public List<Vehicle> Vehicles() {
 		return service.getVehicles();
 	}
-	//get order list by userid of driver
-	@RequestMapping(value = "/driver/orders/{userId}", method = RequestMethod.GET)
-	List<Integer> getAllOrders(@PathVariable int userId) {	
-	System.out.println("inside gelAllOrders"+userId);
+	//get revenue of vehicle
+		@GetMapping("/vehicle-revenue/{driverId}")
+		public double getVehiclesRev(@PathVariable int driverId) {
+			return service.getVehicleRev(driverId);
+		}
+	//get order list by driverUserId
+	@RequestMapping(value = "/driver/orders/{driverUserId}", method = RequestMethod.GET)
+	List<Integer> getAllOrders(@PathVariable int driverUserId) {	
+	System.out.println("inside gelAllOrders"+driverUserId);
 		
-	return service.getDriverAssignedOrderIds(userId);
+	return service.getDriverAssignedOrderIds(driverUserId);
 
 	}
-
+    //on selecting vehicle its updated with repective order_id
 	@PutMapping("/update")
 	public Vehicle modifyVehicle(@RequestBody Vehicle vehicle) {
+		int driverUserId= vehicle.getDriverUserId();
+		int orderId=vehicle.getOrderId();
+		
+		orderService.setDriverUserId(driverUserId,orderId);
+		
 		return service.modifyVehicle(vehicle);
 	}
 
